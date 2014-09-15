@@ -1,6 +1,6 @@
 Require Import List.
 Require Import ZArith.
-Require Import sort. (* roba od Bauerja *)
+Require Import Sorting. (* roba od Bauerja *)
 Require Import Recdef. (* to potrebujemo za definicijo s [Function]. *)
 
 Fixpoint vstavi (x : Z) (l : list Z) :=
