@@ -34,7 +34,7 @@ Proof.
   -simpl ; auto.
   -intros.
    simpl.
-  (* TODO: SearchAbout za case_eq *) 
+  (* TODO: SearchAbout za case_eq *)
    case_eq (Z.leb a a0).
    intros G.
      + simpl.
@@ -62,7 +62,22 @@ Proof.
           assert (G := Zle_cases a a0).
           rewrite H0 in G.
           firstorder.
-          *
+        *apply Z.leb_gt in H0.
+          case_eq(Z.leb a z).
+            intro.
+            firstorder.
+            apply Z.leb_le in H1.
+            auto.
+
+            intros.
+            firstorder.
+            replace (z :: vstavi a l) with (vstavi a (z :: l)).
+              auto.
+
+              simpl.
+              rewrite H1.
+              reflexivity.
+Qed.
           (* TODO: Dokoncaj *)
 
 
@@ -73,3 +88,6 @@ induction l.
     -simpl.
      auto.
     -simpl.
+    apply vstaviP.
+    auto.
+Qed.
