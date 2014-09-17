@@ -98,6 +98,20 @@ Proof.
     admit.
 Qed.
 
+(** Ce x != a in v seznam l dodam element x, potem stevilo
+            pojavitev a ostane enako. *)
+Lemma nepojavi_vstavi(a : Z)(x : Z)(l : list Z):
+    a <> x -> pojavi a l = pojavi a (vstavi x l).
+Proof.
+    induction l.
+    - simpl.
+      intro.
+      
+      admit. (** Tole se dobi takoj iz H. *)
+    - simpl. 
+      admit.
+Qed.
+
 Lemma ohranja_elemente(l : list Z):
     l ~~ insertion l.
 Proof.
@@ -109,9 +123,7 @@ Proof.
         simpl. rewrite H. (* rewrite (vstavi a (insertion l)). *)
         apply pojavi_vstavi.
       - intro. rewrite IHl. rewrite Z.eqb_neq in H.
-        simpl. admit.
-        (** Ce x != a in v seznam l dodam element x, potem stevilo pojavitev a ostane enako. *) 
-        (** Zapisemo to kot lemo? *)
+        simpl. apply nepojavi_vstavi. auto.
 Qed.
 
 (** Insertion sort deluje pravilno. *)
