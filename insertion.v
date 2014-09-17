@@ -91,3 +91,19 @@ induction l.
     apply vstaviP.
     auto.
 Qed.
+
+Lemma ohranja_elemente(l : list Z):
+    l ~~ insertion l.
+Proof.
+    induction l.
+    + intro. auto.
+    + intro. simpl.
+      case_eq(Z.eqb x a).
+      - intro. rewrite IHl. rewrite Z.eqb_eq in H.
+        simpl. rewrite H. (* rewrite (vstavi a (insertion l)). *)
+        admit.
+      - intro. rewrite IHl. rewrite Z.eqb_neq in H.
+        simpl. rewrite H.
+    admit.
+
+Qed.
