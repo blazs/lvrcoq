@@ -93,21 +93,23 @@ induction l.
     auto.
 Qed.
 
-(** Insertion sort ohranja elemente: na vhod dobi seznam l in kot rezultat vrne
-   permutacijo tega seznama. *)
 Lemma ohranja_elemente(l : list Z):
-	l ~~ insertion l.
+    l ~~ insertion l.
 Proof.
-	intro.
-        induction l.
-        - auto.
-        - admit. (* TODO *)
+    induction l.
+    + intro. auto.
+    + intro. simpl.
+      case_eq(Z.eqb x a).
+      - intro. rewrite IHl. rewrite Z.eqb_eq in H.
+        simpl. rewrite H. (* rewrite (vstavi a (insertion l)). *)
+        admit.
+      - intro. rewrite IHl. rewrite Z.eqb_neq in H.
+        simpl. rewrite H.
+    admit.
+
 Qed.
 
-(** Prestej stevilo pojavitev elementa 1 v spodnjem seznamu *)
-Eval compute in pojavi 1 (2::1::3::1::1::4::5::nil)%Z.
-
-(** Insertion sort deluje pravilno. *)
+(* Insertion sort deluje pravilno. *)
 Theorem pravilnost_insertion_sort (l : list Z):
 	urejen (insertion l) /\ l ~~ insertion l.
 Proof.
