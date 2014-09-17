@@ -17,6 +17,7 @@ Fixpoint insertion( l : list Z) :=
           vstavi x l''
    end.
 
+(* Ce je seznam x::l urejen, potem je urejen tudi njegov rep l. *)
 Lemma urejen_tail (x : Z) (l : list Z) :
   urejen(x::l) -> urejen(l).
 Proof.
@@ -27,6 +28,8 @@ Qed.
 
 Eval compute in insertion (1::4::3::6::2::8::7::nil)%Z.
 
+(* Vstavi ohranja urejenost: ce je seznam l urejen, potem je urejen tudi 
+   seznam, ki ga dobimo kot rezultat klica vstavi a l, za nek element a. *)
 Lemma vstaviP: forall a : Z, forall l:list Z,
   urejen (l) -> urejen(vstavi a l).
 Proof.
@@ -34,7 +37,6 @@ Proof.
   -simpl ; auto.
   -intros.
    simpl.
-  (* TODO: SearchAbout za case_eq *)
    case_eq (Z.leb a a0).
    intros G.
      + simpl.
@@ -78,9 +80,8 @@ Proof.
               rewrite H1.
               reflexivity.
 Qed.
-          (* TODO: Dokoncaj *)
 
-
+(* Insertion sort na vhood vzame seznam in vrne nek urejen seznam. *)
 Lemma pravilnost1 (l : list Z):
   urejen (insertion l).
 Proof.
@@ -90,4 +91,21 @@ induction l.
     -simpl.
     apply vstaviP.
     auto.
+Qed.
+
+(* Insertion sort ohranja elemente: na vhod dobi seznam l in kot rezultat vrne
+   permutacijo tega seznama. *)
+Lemma ohranja_elemente(l : list Z):
+	l ~~ insertion l.
+Proof.
+        (* TODO: S tem se muci blazs. *)
+	admit.
+Qed.
+
+(* Insertion sort deluje pravilno. *)
+Theorem pravilnost_insertion_sort (l : list Z):
+	urejen (insertion l) /\ l ~~ insertion l.
+Proof.
+	split;
+        [apply pravilnost1 | apply ohranja_elemente].
 Qed.
