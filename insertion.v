@@ -70,12 +70,10 @@ Proof.
             firstorder.
             apply Z.leb_le in H1.
             auto.
-
             intros.
             firstorder.
             replace (z :: vstavi a l) with (vstavi a (z :: l)).
               auto.
-
               simpl.
               rewrite H1.
               reflexivity.
@@ -93,6 +91,13 @@ induction l.
     auto.
 Qed.
 
+(** Ce v seznam l vstavim element a, se stevilo pojavitev poveca za 1. *)
+Lemma pojavi_vstavi(a : Z)(l : list Z):
+    S (pojavi a (insertion l)) = pojavi a (vstavi a (insertion l)).
+Proof.
+    admit.
+Qed.
+
 Lemma ohranja_elemente(l : list Z):
     l ~~ insertion l.
 Proof.
@@ -102,14 +107,14 @@ Proof.
       case_eq(Z.eqb x a).
       - intro. rewrite IHl. rewrite Z.eqb_eq in H.
         simpl. rewrite H. (* rewrite (vstavi a (insertion l)). *)
-        admit.
+        apply pojavi_vstavi.
       - intro. rewrite IHl. rewrite Z.eqb_neq in H.
-        simpl. rewrite H.
-    admit.
-
+        simpl. admit.
+        (** Ce x != a in v seznam l dodam element x, potem stevilo pojavitev a ostane enako. *) 
+        (** Zapisemo to kot lemo? *)
 Qed.
 
-(* Insertion sort deluje pravilno. *)
+(** Insertion sort deluje pravilno. *)
 Theorem pravilnost_insertion_sort (l : list Z):
 	urejen (insertion l) /\ l ~~ insertion l.
 Proof.
