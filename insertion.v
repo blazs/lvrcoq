@@ -1,7 +1,7 @@
 Require Import List.
 Require Import ZArith.
-Require Import Sorting. (* roba od Bauerja *)
-Require Import Recdef. (* to potrebujemo za definicijo s [Function]. *)
+Require Import Sorting. (** Roba od Bauerja. *)
+Require Import Recdef. (** To potrebujemo za definicijo s [Function]. *)
 
 Fixpoint vstavi (x : Z) (l : list Z) :=
   match l with
@@ -17,7 +17,7 @@ Fixpoint insertion( l : list Z) :=
           vstavi x l''
    end.
 
-(* Ce je seznam x::l urejen, potem je urejen tudi njegov rep l. *)
+(** Ce je seznam x::l urejen, potem je urejen tudi njegov rep l. *)
 Lemma urejen_tail (x : Z) (l : list Z) :
   urejen(x::l) -> urejen(l).
 Proof.
@@ -28,7 +28,7 @@ Qed.
 
 Eval compute in insertion (1::4::3::6::2::8::7::nil)%Z.
 
-(* Vstavi ohranja urejenost: ce je seznam l urejen, potem je urejen tudi 
+(** Vstavi ohranja urejenost: ce je seznam l urejen, potem je urejen tudi 
    seznam, ki ga dobimo kot rezultat klica vstavi a l, za nek element a. *)
 Lemma vstaviP: forall a : Z, forall l:list Z,
   urejen (l) -> urejen(vstavi a l).
@@ -81,7 +81,7 @@ Proof.
               reflexivity.
 Qed.
 
-(* Insertion sort na vhood vzame seznam in vrne nek urejen seznam. *)
+(** Insertion sort na vhood vzame seznam in vrne nek urejen seznam. *)
 Lemma pravilnost1 (l : list Z):
   urejen (insertion l).
 Proof.
@@ -93,16 +93,21 @@ induction l.
     auto.
 Qed.
 
-(* Insertion sort ohranja elemente: na vhod dobi seznam l in kot rezultat vrne
+(** Insertion sort ohranja elemente: na vhod dobi seznam l in kot rezultat vrne
    permutacijo tega seznama. *)
 Lemma ohranja_elemente(l : list Z):
 	l ~~ insertion l.
 Proof.
-        (* TODO: S tem se muci blazs. *)
-	admit.
+	intro.
+        induction l.
+        - auto.
+        - admit. (* TODO *)
 Qed.
 
-(* Insertion sort deluje pravilno. *)
+(** Prestej stevilo pojavitev elementa 1 v spodnjem seznamu *)
+Eval compute in pojavi 1 (2::1::3::1::1::4::5::nil)%Z.
+
+(** Insertion sort deluje pravilno. *)
 Theorem pravilnost_insertion_sort (l : list Z):
 	urejen (insertion l) /\ l ~~ insertion l.
 Proof.
