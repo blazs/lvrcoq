@@ -93,18 +93,13 @@ induction l.
     auto.
 Qed.
 
-Lemma bla(a : Z)(l : list Z):
-   vstavi a (insertion l) = insertion(a :: l).
-Proof.
-   admit.
-Qed.
 (** Ce v seznam l vstavim element a, se stevilo pojavitev poveca za 1. *)
 Lemma pojavi_vstavi(a : Z)(l : list Z):
     S (pojavi a ( l)) = pojavi a (vstavi a ( l)).
 Proof.
     induction l.
       -simpl.
-      SearchPattern(?a = ?a).
+      SearchAbout(Z.eqb ?a ?a).
       rewrite Z.eqb_refl.
       auto.
       -simpl. 
